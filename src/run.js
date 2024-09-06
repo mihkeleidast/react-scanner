@@ -41,11 +41,16 @@ async function run({
     importedFrom,
     getComponentName,
     getPropValue,
+    beforeScan,
   } = config;
 
   for (let i = 0, len = files.length; i < len; i++) {
     const filePath = files[i];
-    const code = fs.readFileSync(filePath, "utf8");
+    let code = fs.readFileSync(filePath, "utf8");
+
+    if (beforeScan) {
+      code = beforeScan(code);
+    }
 
     scan({
       code,
