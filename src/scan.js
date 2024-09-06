@@ -2,11 +2,7 @@ const { parse } = require("@typescript-eslint/typescript-estree");
 const astray = require("astray");
 const getObjectPath = require("dlv");
 const { dset } = require("dset");
-
-const parseOptions = {
-  loc: true,
-  jsx: true,
-};
+const path = require("path");
 
 function getComponentNameFromAST(nameObj) {
   switch (nameObj.type) {
@@ -108,7 +104,11 @@ function scan({
   let ast;
 
   try {
-    ast = parse(code, parseOptions);
+    const { ext } = path.parse(filePath);
+    ast = parse(code, {
+      loc: true,
+      jsx: [".ts", ".mts", ".cts"].includes(ext) ? false : true,
+    });
   } catch (_e) {
     console.error(`Failed to parse: ${filePath}`);
     return;
