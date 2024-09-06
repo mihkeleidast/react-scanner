@@ -36,6 +36,10 @@ function getPropValue(node) {
     return node.value;
   }
 
+  if (node.type === "JSXElement") {
+    return `(${node.type})`;
+  }
+
   if (node.type === "JSXExpressionContainer") {
     if (node.expression.type === "Literal") {
       return node.expression.value;

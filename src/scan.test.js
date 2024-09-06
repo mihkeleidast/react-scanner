@@ -846,6 +846,45 @@ Scan("props with jsx expressions", ({ getReport }) => {
   });
 });
 
+Scan("props with jsx expressions without parenthesis", ({ getReport }) => {
+  const report = getReport(
+    "imported-from-in-prop-jsx.js",
+
+    `
+    import { Box } from "other-place";
+    import { Text } from "basis";
+
+    <Text foo=<Box foo={bar} /> />`,
+    { importedFrom: "basis" }
+  );
+
+  assert.equal(report, {
+    Text: {
+      instances: [
+        {
+          props: {
+            foo: "(JSXElement)",
+          },
+          propsSpread: false,
+          location: {
+            file: "imported-from-in-prop-jsx.js",
+            start: {
+              line: 5,
+              column: 5,
+            },
+          },
+          importInfo: {
+            imported: "Text",
+            local: "Text",
+            moduleName: "basis",
+            importType: "ImportSpecifier",
+          },
+        },
+      ],
+    },
+  });
+});
+
 Scan("importedFrom named export with alias", ({ getReport }) => {
   const report = getReport(
     "imported-from-named-export-with-alias.js",
