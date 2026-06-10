@@ -547,7 +547,7 @@ Scan("ignores non-JSX stuff", ({ getReport }) => {
           location: {
             file: "ignores-non-jsx-stuff.js",
             start: {
-              line: 6,
+              line: 8,
               column: 9,
             },
           },
@@ -558,7 +558,7 @@ Scan("ignores non-JSX stuff", ({ getReport }) => {
           location: {
             file: "ignores-non-jsx-stuff.js",
             start: {
-              line: 8,
+              line: 6,
               column: 9,
             },
           },
